@@ -104,5 +104,10 @@ venv.bak/
 .mypy_cache/
 
 # OS stuff:
+# Mac
 .DS_Store
 .idea
+
+# Ignorar carpetas
+data/
+__trash__/
