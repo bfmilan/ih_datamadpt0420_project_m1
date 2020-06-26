@@ -1,99 +1,109 @@
-# Data Project README file
+# **ih_datamadpt0420_project_m1**
 
-The README file describes the essence of the project playing the most important role. Most visitors will simply scroll down about twice on the README and leave if they are not interested. So, the README file should provide the reason **why** to checkout your project!!!). 
-Bearing that in mind, your job is to: 
-- Tell them what it is (with context).
-- Show them what it looks like in action.
-- Show them how they use it.
-- Tell them any other relevant details.
+## **Data:**
 
-![Image](https://res.cloudinary.com/springboard-images/image/upload/q_auto,f_auto,fl_lossy/wordpress/2019/05/aiexcerpt.png)
+There are 3 different datasource involved:
 
----
+- **Tables (.db).** [Here](http://www.potacho.com/files/ironhack/raw_data_project_m1.db) you can find the `.db` file with the main dataset.
 
-## **Formatting**
-Your readers will most likely view your README in a browser so please keep that in mind when formatting its content: 
-- Use proper format when necesary (e.g.: `import pandas as pd`). 
-- Categorize content using two or three levels of header beneath. 
-- Make use of **emphasis** to call out important words. 
-- Link to project pages for related libraries you mention. Link to Wikipedia, Wiktionary, even Urban Dictionary definitions for words of which a reader may not be familiar. Make amusing cultural references. 
-- Add links to related projects or services. 
+- **API.** We will use the API from the [Open Skills Project](http://dataatwork.org/data/).  
 
-> Here you have a markdown cheatsheet [Link](https://commonmark.org/help/) and tutorial [Link](https://commonmark.org/help/tutorial/).
-
-
-## **Start writing ASAP:**
-*Last but not least, by writing your README soon you give yourself some pretty significant advantages. Most importantly, you’re giving yourself a chance to think through the project without the overhead of having to change code every time you change your mind about how something should be organized or what should be included.*
-
-
-## **Suggested Structure:**
-
-### :raising_hand: **Name** 
-Self-explanatory names are best. If the name sounds too vague or unrelated, it may be a signal to move on. It also must be catchy. Images, Logo, Gif or some color is strongly recommended.
-
-### :baby: **Status**
-Alpha, Beta, 1.1, Ironhack Data Analytics Final Project, etc... It's OK to write a sentence, too. The goal is to let interested people know where this project is at.
-
-### :running: **One-liner**
-Having a one-liner that describes the pipeline/api/app is useful for getting an idea of what your code does in slightly greater detail. 
-
-### :computer: **Technology stack**
-Python, Pandas, Scipy, Scikit-learn, etc. Indicate the technological nature of the software, including primary programming language(s), main libraries and whether the software is intended as standalone or as a module in a framework or other ecosystem.
-
-### :boom: **Core technical concepts and inspiration**
-Why does it exist? Frame your project for the potential user. Compare/contrast your project with other, similar projects so the user knows how it is different from those projects. Highlight the technical concepts that your project demonstrates or supports. Keep it very brief.
-
-### :wrench: **Configuration**
-Requeriments, prerequisites, dependencies, installation instructions.
-
-### :see_no_evil: **Usage**
-Parameters, return values, known issues, thrown errors.
-
-### :file_folder: **Folder structure**
-```
-└── project
-    ├── __trash__
-    ├── .gitignore
-    ├── .env
-    ├── requeriments.txt
-    ├── README.md
-    ├── main_script.py
-    ├── notebooks
-    │   ├── notebook1.ipynb
-    │   └── notebook2.ipynb
-    ├── package1
-    │   ├── module1.py
-    │   └── module2.py
-    └── data
-        ├── raw
-        ├── processed
-        └── results
-```
-
-> Do not forget to include `__trash__` and `.env` in `.gitignore` 
-
-### :shit: **ToDo**
-Next steps, features planned, known bugs (shortlist).
-
-### :information_source: **Further info**
-Credits, alternatives, references, license.
-
-### :love_letter: **Contact info**
-Getting help, getting involved, hire me please.
+- **Web Scraping.** Finally, we will need to retrieve information about country codes from [Eurostat](https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes) website.
 
 ---
 
-> Here you have some repo examples:
-- [Mamba (OCR-Translator-Assistant)](https://github.com/YonatanRA/OCR-translator-assistant-project)
-- [Art Classification](https://github.com/serguma/art_classification)
-- [OSNet-IBN (width x 1.0) Lite](https://github.com/RodMech/OSNet-IBN1-Lite)
-- [Movie Founder](https://github.com/Alfagu/final-project-Ironhack-0419mad)
-- [Convolutional Neural Network to detect Pneumonia](https://github.com/jmolins89/final-project)
-- [Brain tumor detection project](https://github.com/alonsopdani/brain-tumor-detection-project)
-- [Policy-Gradient-Methods](https://github.com/cyoon1729/Policy-Gradient-Methods)
+## **Challenge 1:**
 
-> Here you have some tools and references:
-- [Make a README](https://www.makeareadme.com/)
-- [Awesome README](https://github.com/matiassingers/awesome-readme)
-- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+You need to create a **Data Pipeline** that retrieves the following table:
+
+| Country | Job Title      | Gender (1) | Quantity | Percentage |
+|---------|----------------|------------|----------|------------|
+| Spain   | Data Scientist | Male       | 25       | 5%         |
+| Spain   | Data Scientist | Female     | 25       | 5%         |
+| ...     | ...            | ...        | ...      | ...        |
+> **(1)** This attribute won't be the same for all students. See distribution bellow. 
+
+
+**Your project must meet the following requirements:**
+
+- It must be contained in a GitHub repository which includes a README file that explains the aim and content of your code. You may follow the structure suggested [here](https://github.com/potacho/data-project-template).
+
+- It must create, at least, a `.csv` file including the requested table. Alternatively, you may create an image, pdf, plot or any other output format that you may find convenient. You may also send your output by e-mail, upload it to a cloud repository, etc. 
+
+- It must provide, at least, two options for the final user to select when executing: **(1)** To get the table for every country included in the dataset, **(2)** To get the table for a specific country imputed by the user.
+
+**Additionally:**
+
+- You must prepare a 3 minutes presentation (ppt, canva, etc.) to explain your project (TAs will provide further details about the content of the presentation).
+
+- The last slide of your presentation must include your candidate for the first **'Ironhack Data Code Beauty Pageant'**. 
+
+
+---
+
+### **Bonus 1:**
+
+| Position | Number of Pro Arguments | Number of Cons Arguments |
+|----------|-------------------------|--------------------------|
+| In Favor |                         |                          |
+| Against  |                         |                          |
+> Feel free to decide the criteria to use in order to define the concept of **Number**.
+
+---
+### **Bonus 2:**
+
+| Education Level | Top 10 Skills | 
+|-----------------|---------------|
+| high            |               |                          
+| medium          |               |                          
+| low             |               |                          
+| no education    |               |                          
+> Feel free to decide the table's geometry (i.e.: the amount of columns used to show the skills).
+
+
+---
+### **Bonus 3:**
+
+Any other information that you may find interesting and/or relevant!!! 
+
+
+--- 
+
+## **Further Info**
+
+**Challenge 1 Attribute Distribution:**
+
+- **Gender:** Blanca, Carlos, David Gozalo, Enmanuel, Javi, Jorge, Josue, Laura, Luis, Miguel Angel, Pablo.
+
+- **Rural:** Adja, Agustin, Carmen, Diegales, Diego Melon, Juan Carlos, Juanito, Marta, Sabine, Sandra.
+
+- **Age (Dataset was taken in 2016):** Antonio, Christian, David Blanco, Ivan, Juan Antonio, Juan Muñoz, Lucas, Nacho, Sergio, Victor.
+
+**References:**
+
+- [SQL Alchemy](https://docs.sqlalchemy.org/en/13/intro.html)
+
+- [Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/index.html)
+
+- [Requests](https://requests.readthedocs.io/)
+
+- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+
+- [Argparse](https://docs.python.org/3.7/library/argparse.html)
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+ 
 
