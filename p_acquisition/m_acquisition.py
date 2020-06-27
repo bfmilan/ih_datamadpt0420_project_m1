@@ -1,53 +1,17 @@
-
 import pandas as pd
+from sqlalchemy.pool import StaticPool
 from sqlalchemy import create_engine
 
-# Functions in visual order
-def tables_to_df(arguments):
-    db_path = arguments
-    data_base = connection(db_path)
-    table_names = data_base.table_names()
-    print(f"Obtaining tables from data base provided")
-    print("...")
-    print("...")
 
-    df_list = []
+# Function to connect the database and get a dataframe from it. It also exports it to a csv.
+def acquire(path):
+    print('importing the db...')
+    engine = create_engine(f'sqlite:///{path}', poolclass=StaticPool)
+    raw_data = pd.read_sql("""SELECT * FROM career_info   
+    inner join poll_info on career_info.uuid = poll_info.uuid  
+    inner join country_info on country_info.uuid = poll_info.uuid 
+    inner join personal_info on personal_info.uuid = career_info.uuid""", engine)
+    raw_data.to_csv('data/raw/raw_data_info.csv', index=False)
+    print('db saved...')
+    return raw_data
 
-    for table in table_names:
-        sql_query = sql_query_to_df(table, data_base)
-        print(f"Converting {table} table into data frame")
-        df_list.append(sql_query)
-
-    return df_list
-
-
-def connection(db_path):
-    print(f'Connecting to {db_path}')
-    print("...")
-    print("...")
-    db_connection = create_engine(f'sqlite:////{db_path}', pool_pre_ping=True)
-
-    return db_connection
-
-
-def sql_query_to_df(table, data_base):
-    select_all_query = pd.read_sql_query(f'SELECT * FROM {table}', data_base)
-    return select_all_query
-
-
-def get_json(url, json_acum=[], calls=0):
-    print(f'Getting info from {url}')
-    response = requests.get(url)
-    json = response.json()
-    json_acum.append(json[:-1])
-
-    link = json[-1]['links'][2]['href']
-
-    next_link = f'{root}{link}'
-
-    if calls <= 5:
-        get_json(next_link, json_acum, calls + 1)
-
-    jobs_df = pd.DataFrame(json_acum[0])
-
-    return jobs_df
