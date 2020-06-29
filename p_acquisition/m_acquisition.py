@@ -14,4 +14,3 @@ def acquire(path):
     raw_data.to_csv('data/raw/raw_data_info.csv', index=False)
     print('db saved...')
     return raw_data
-

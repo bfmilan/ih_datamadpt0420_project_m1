@@ -1,32 +1,46 @@
-import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
 # reporting functions
-
-'''
-def visualize_barplot(df,title):
-    fig, ax = plt.subplots(figsize=(15,8))
-    chart = sns.barplot(data=df, x='Make', y='Combined MPG')
+def plot_returns(data, x, y, length=8, width=14, title=""):
+    data = data.sort_values(x, ascending=False)
+    plt.figure(figsize=(width, length))
+    chart = sns.barplot(data=data, x=x, y=y)
     plt.title(title + "\n", fontsize=16)
     return chart
 
-def visualize_lineplot(df,title):
-    fig, ax = plt.subplots(figsize=(15,8))
-    chart = sns.lineplot(data=df, x='Make', y='Combined MPG')
-    plt.title(title + "\n", fontsize=16)
+'''
+def correlation_plot(corr, title=""):
+    mask = np.zeros_like(corr, dtype=np.bool)
+    mask[np.triu_indices_from(mask)] = True
+    plt.subplots(figsize=(15, 10))
+    cmap = sns.diverging_palette(6, 255, as_cmap=True)
+    chart = sns.heatmap(corr,
+                        mask=mask,
+                        cmap=cmap,
+                        center=0,
+                        linewidths=.5,
+                        annot=True,
+                        fmt='.2f')
+    plt.title(title, fontsize=16)
     return chart
+
 '''
 
-def plotting_function(df,title,args):
-    fig, ax = plt.subplots(figsize=(16,8))
-    plt.title(title + "\n", fontsize=16)
-    if args.bar == True:
-        sns.barplot(data=df, x='Make', y='Combined MPG')
-        return fig
-    elif args.line == True:
-        sns.lineplot(data=df, x='Make', y='Combined MPG')
-        return fig
+def save_viz(chart, title):
+    fig = chart.get_figure()
+    fig.savefig(f'./data/results/{title}.png')
 
-def save_viz(fig,title):
-    fig.savefig('./data/results/' + title + '.png')
+
+def report(quantity, percentage):
+    bar_plot = plot_returns(quantity,
+                            'Ratio',
+                            'Company',
+                            title='Stock Return vs. Risk Ratios')
+
+    corr_plot = correlation_plot(returns_corr, title='Stock Return Correlation')
+
+    save_viz(bar_plot, 'bar_plot_top_risk_companies')
+    save_viz(corr_plot, 'corr_plot_stock_returns')
