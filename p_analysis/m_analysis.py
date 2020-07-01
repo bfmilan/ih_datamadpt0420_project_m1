@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 def clean_data(data):
+	pd.set_option('mode.chained_assignment', None)
 	print(f' These are the initial data columns to show: {data.columns.values.tolist()}')
 	data = data[['Country', 'Job Title', 'Gender', 'uuid']]
 	data.columns = ['Country', 'Job Title', 'Gender', 'uuid', 'caca1', 'caca2', 'caca3']
@@ -19,55 +20,35 @@ def clean_data(data):
 	print(f'My final data shape: {data.shape}\n My final data type: {type(data)}\n My final data head:\n{data.head(10)}')
 	print(data.head(10))
 	print(f'Table: Data info\nRows: {data.shape[0]} \nColumns: {data.shape[1]}\n\nNull values:\n{data.isnull().sum()}')
-
 	return data
 
 
 # analysis functions
-def compute_quantity(data):
-	# Deactivating SettingWithCopyWarning.
-	# A value is trying to be set on a copy of a slice from a DataFrame.
-
-	pd.set_option('mode.chained_assignment', None)
-
-	print('Getting rid of NaN values...')
-	data = data[['Country', 'Job Title', 'Gender', 'uuid']]
-	data.columns = ['Country', 'Job Title', 'Gender', 'uuid', 'caca1', 'caca2', 'caca3']
-	data = data[['Country', 'Job Title', 'Gender', 'uuid']]
-	data.dropna(subset=['Job Title'], axis = 0, inplace = True)
-	print('NaN values gone!')
-	print(f'Table: Data info after Nan cleaning \nRows: {data.shape[0]} \nColumns: {data.shape[1]}\n\nNull values:\n{data.isnull().sum()}')
-	data = data.groupby(['Country', 'Job Title', 'Gender'])['uuid'].count().reset_index()
-	data.rename(columns={'uuid': 'Quantity'},
+# Challenge 1
+def challenge1(data, country='All'):
+	ch1 = data.groupby(['Country', 'Job Title', 'Gender'])['uuid'].count().reset_index()
+	ch1.rename(columns={'uuid': 'Quantity'},
 				  inplace=True)
-	# data.groupby(['Country', 'Gender'], as_index=False).agg({'Job Title': pd.Series.nunique})
-	print(data)
-	country_filter = data['Country'] == 'Spain'
-	# country_filter = df_ch1['Country'] == country.capitalize()
-	data = data.loc[country_filter]
-	print(data)
-	check_quantity = data['Quantity'].sum()
-	print(f'we have the quantity calculated! {check_quantity}')
-	data.to_csv('data/results/data_quantity.csv', index=False)
-	return data
+	country_filter = ch1['Country'] == country
+	if country == 'All':
+		check_quantity = ch1['Quantity'].sum()
+		print(f'we have the quantity calculated for all! {check_quantity}')
+		ch1.to_csv('data/results/ch1_quantity.csv', index=False)
+	else:
+		ch1 = ch1.loc[country_filter]
+		check_quantity = ch1['Quantity'].sum()
+		print(f'we have the quantity calculated for {country}! {check_quantity}')
+		print(ch1)
+		ch1.to_csv('data/results/ch1_quantity.csv', index=False)
+
+	ch1['Percentage'] = ch1['Quantity'] / ch1['Quantity'].sum() * 1000
+	print(ch1.head(10))
+	print(f'My final data shape: {ch1.shape}\n My final data type: {type(ch1)}\n My final data head:\n{ch1.head(10)}')
+	ch1.to_csv('data/results/data_final.csv', index=False)
+	return ch1
 
 
-def compute_quantity_percent(data):
-	data = pd.read_csv('/Users/Blanca/ironhack/gitrepo/ih_datamadpt0420_project_m1/data/results/data_quantity.csv')
-	# data = data.groupby(['Country', 'Job Title', 'Gender'])['Quantity'].count().reset_index()
-	# data['Percentage'] = data.apply(lambda row: row['Quantity'] / row['Quantity'], axis=1)
-	data['Percentage'] = data['Quantity'] / data['Quantity'].sum() * 1000
-	print(data.head(10))
-	# data['Percentage'] = (data['Quantity'] / 1000)
-	# print(f'Check Percentage Sym: {data['Percentage'].sum()}')
-	print(f'My final data shape: {data.shape}\n My final data type: {type(data)}\n My final data head:\n{data.head(10)}')
-	data.to_csv('data/results/data_final.csv', index=False)
-	return data
-
-
-def analysis(data: object) -> object:
-	clean_data(data)
-	compute_quantity(data)
-	compute_quantity_percent(data)
-	# data.to_csv('data/results/data_final.csv', index=False)
-	return data
+def analysis(data, country):
+	data_clean = clean_data(data)
+	final_data = challenge1(data_clean, country)
+	return final_data

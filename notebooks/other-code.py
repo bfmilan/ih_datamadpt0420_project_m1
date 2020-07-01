@@ -18,3 +18,20 @@ def get_tables(path):
     return df_final
 
 print(df_final)
+
+
+
+----
+df_clean = raw_data[
+    'uuid', 'education_level', 'full_time_job', 'Job Title', 'uuid', 'basic_income_awareness', 'basic_income_vote',
+    'basic_income_effect', 'basic_income_arguments_for', 'basic_income_arguments_against', 'uuid', 'Country', 'Area',
+    'uuid', 'age', 'Gender', 'Children', 'Age']
+df_clean.columns = ['uuid', 'Education_level', 'Full_time_job', 'Job Title', 'caca', 'basic_income_awareness',
+                    'basic_income_vote',
+                    'basic_income_effect', 'basic_income_arguments_for', 'basic_income_arguments_against', 'caca1',
+                    'Country', 'Area',
+                    'caca2', 'age', 'Gender', 'Children', 'Age']
+df_clean = df_clean[
+    'uuid', 'Education_level', 'Full_time_job', 'Job Title', 'basic_income_awareness', 'basic_income_vote',
+    'basic_income_effect', 'basic_income_arguments_for', 'basic_income_arguments_against', 'Country', 'Area',
+    'Gender', 'Children', 'Age']

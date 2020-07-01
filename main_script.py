@@ -8,23 +8,22 @@ from p_reporting import m_reporting as mre
 def argument_parser():
     parser = argparse.ArgumentParser(description='specify inputs')
     parser.add_argument('-p', '--path', type=str, help='specify .db database path', required=True)
-    # parser.add_arguement('-c', '--country', type = str, help = 'specify country', required = True)
+    parser.add_argument('-c', '--country', type = str, help = 'specify country...', dest='country')
     args = parser.parse_args()
     return args
 
 
-def main(arguments):
+def main(args):
     print('starting pipeline...')
     print('Getting the data from database...')
-    raw_data = mac.acquire(arguments.path)
+    raw_data = mac.acquire(args.path)
     print('Data from database is there!...')
     print('Dealing with data...')
     data = mwr.wrangling(raw_data)
     print('Data dealt!')
     print('analysing the data...')
-    man.analysis(data)
-    # quantity = man.compute_quantity(data)
-    # percentage = man.compute_quantity_percent(data)
+    molins = man.analysis(data, args.country)
+    print(molins)
     print('Data analysed!...')
 
     # mre.report(top_return_risk_companies, returns_corr)

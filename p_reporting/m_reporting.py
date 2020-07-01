@@ -1,46 +1,56 @@
-import numpy as np
+# Graphical libs
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Email libs
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
-# reporting functions
-def plot_returns(data, x, y, length=8, width=14, title=""):
-    data = data.sort_values(x, ascending=False)
-    plt.figure(figsize=(width, length))
-    chart = sns.barplot(data=data, x=x, y=y)
-    plt.title(title + "\n", fontsize=16)
-    return chart
-
-'''
-def correlation_plot(corr, title=""):
-    mask = np.zeros_like(corr, dtype=np.bool)
-    mask[np.triu_indices_from(mask)] = True
-    plt.subplots(figsize=(15, 10))
-    cmap = sns.diverging_palette(6, 255, as_cmap=True)
-    chart = sns.heatmap(corr,
-                        mask=mask,
-                        cmap=cmap,
-                        center=0,
-                        linewidths=.5,
-                        annot=True,
-                        fmt='.2f')
-    plt.title(title, fontsize=16)
-    return chart
-
-'''
-
-def save_viz(chart, title):
-    fig = chart.get_figure()
-    fig.savefig(f'./data/results/{title}.png')
+# Reading images lib
+from PIL import Image
 
 
-def report(quantity, percentage):
-    bar_plot = plot_returns(quantity,
-                            'Ratio',
-                            'Company',
-                            title='Stock Return vs. Risk Ratios')
+def graph_reporting():
+    print('Loading data...')
 
-    corr_plot = correlation_plot(returns_corr, title='Stock Return Correlation')
+    df_country = pd.read_json('./data/results/country_analysis.json')
+    # df_opinion = pd.read_json('./data/results/opinion_analysis.json')
+    # df_edu = pd.read_json('./data/results/edu_level_analysis.json')
 
-    save_viz(bar_plot, 'bar_plot_top_risk_companies')
-    save_viz(corr_plot, 'corr_plot_stock_returns')
+
+    print('Creating gender distribution chart.')
+    g = df_country[['Gender', 'Quantity']].set_index('Gender').groupby('Gender').sum().reset_index()
+    ax = g.set_index('Gender').plot.pie(y='Quantity', x='Gender', figsize=(8, 8))
+    fig = ax.get_figure()
+    fig.savefig('./data/reporting/gender_distribution.jpeg')
+
+
+    print('Creating vote intention chart.')
+    h = df_opinion[['Vote_intention', 'Number_of_votes']].reset_index()
+    bx = sns.catplot(x='Vote_intention', y='Number_of_votes', kind='bar', aspect=4, palette="ch:.25", data=h);
+    bx.savefig('./data/reporting/vote_intention.jpeg')
+
+
+    print('Creating top jobs/education level chart.\n')
+    plt.figure(figsize=(20, 8))
+    cx = sns.scatterplot(x="Education_level", y="Total",
+                         hue="Job_title", size="Total",
+                         sizes=(100, 500), legend='brief',
+                         data=df_edu)
+    lgn = cx.legend(loc='lower left', ncol=2)
+
+    cx.figure.savefig('./data/reporting/top_education_jobs.jpeg')
+
+
+def pdf_reporting():
+    print('Adding images.')
+    img1 = Image.open('./data/reporting/gender_distribution.jpeg')
+    img2 = Image.open('./data/reporting/vote_intention.jpeg')
+    img3 = Image.open('./data/reporting/top_education_jobs.jpeg')
+
+    img1.save(r'./data/reporting/reporting.pdf', save_all=True, append_images=[img2, img3])
+    print('PDF reporting generated.\n')
