@@ -3,6 +3,6 @@ pandas==0.24.2
 matplotlib==3.1.2
 seaborn==0.9.0
 
-# cond activate ironhack
+# conda activate ironhack
 # cd ironhack/gitrepo/ih_datamadpt0420_project_m1
-# python main_script.py -p /Users/Blanca/ironhack/gitrepo/ih_datamadpt0420_project_m1/data/raw/raw_data_project_m1.db
+python main_script.py -p /Users/Blanca/ironhack/gitrepo/ih_datamadpt0420_project_m1/data/raw/raw_data_project_m1.db -e bfmilan@gmail.com
