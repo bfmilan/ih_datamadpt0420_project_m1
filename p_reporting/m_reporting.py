@@ -36,15 +36,16 @@ def pdf_reporting():
 
     img1.save(r'./data/reporting/reporting.pdf', save_all=True)
     # img1.save(r'./../data/reporting/reporting.pdf', save_all=True, append_images=[img2])
-    print('PDF reporting generated and saved in the reporting folder\n')
+    print('PDF report with key results generated and saved in the reporting folder\n')
     return img1
 
 def email_reporting(email):
     # https://www.geeksforgeeks.org/send-mail-attachment-gmail-account-using-python/
 
     fromaddr = "bfmilan@gmail.com"  # <--------------------------------------  Cuenta envío
-    toaddr = "bfmilan@gmail.com"  # <----------------------------------------  Email receptor
-
+    # toaddr = "marmilan60@gmail.com"  # <----------------------------------------  Email receptor
+    rec_list = ['bfmilan@gmail.com', 'bfmilan@gmail.com']
+    rec = ', '.join(rec_list)
     # instance of MIMEMultipart
     msg = MIMEMultipart()
 
@@ -52,7 +53,7 @@ def email_reporting(email):
     msg['From'] = fromaddr
 
     # storing the receivers email address
-    msg['To'] = toaddr
+    msg['To'] = rec
 
     # storing the subject
     msg['Subject'] = "Our first kiss - one of a million to come..."
@@ -67,7 +68,7 @@ def email_reporting(email):
 
     # open the file to be sent
     filename = "reporting.pdf"
-    attachment = open("./data/reporting/reporting.pdf", "rb")  # <--------------------------------------  Attachements
+    attachment = open("./data/reporting/project1.pdf", "rb")  # <--------------------------------------  Attachements
 
     # instance of MIMEBase and named as p
     p = MIMEBase('application', 'octet-stream')
@@ -90,18 +91,18 @@ def email_reporting(email):
     s.starttls()
 
     # Authentication
-    s.login(fromaddr, "psw")  # <----------------------------------------  Contraseña de aplicación
+    s.login(fromaddr, "....")  # <----------------------------------------  Contraseña de aplicación
 
     # Converts the Multipart msg into a string
     text = msg.as_string()
 
     # sending the mail
-    s.sendmail(fromaddr, toaddr, text)
+    s.sendmail(fromaddr, rec_list, text)
 
     # terminating the session
     s.quit()
 
-    print(f'Reporting sent to {toaddr}')
+    print(f'Report sent to {rec_list}!')
 
 
 

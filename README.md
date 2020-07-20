@@ -1,85 +1,85 @@
-# **ih_datamadpt0420_project_m1**
-
-## **Data:**
-
-There are 3 different datasource involved:
-
-- **Tables (.db).** [Here](http://www.potacho.com/files/ironhack/raw_data_project_m1.db) you can find the `.db` file with the main dataset.
-
-- **API.** We will use the API from the [Open Skills Project](http://dataatwork.org/data/).  
-
-- **Web Scraping.** Finally, we will need to retrieve information about country codes from [Eurostat](https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes) website.
+# Ironhack Data Analytics Module 1 Project
+Survey answers Pipeline showing quantity and percentage of respondents per country, job and living area.
 
 ---
+### :computer: **Technology stack**
+Python
 
-## **Challenge 1:**
-
-You need to create a **Data Pipeline** that retrieves the following table:
-
+### :boom: **Core technical concepts**
+Reporting tool to analyze survey results.
+It generates a .csv every time the script runs.
+- It provides two options for the final user to select when executing: 
+**(1)** To get the table for every country included in the dataset (All), 
+**(2)** To get the table for a specific country imputed by the user (i.e. Spain)
+- GitHub repository which includes a README file (this file) that explains the aim and content of my code. 
+- Data Pipeline that retrieves the following table as well as `.csv` file including a table with . 
 | Country | Job Title      | Gender (1) | Quantity | Percentage |
 |---------|----------------|------------|----------|------------|
 | Spain   | Data Scientist | Male       | 25       | 5%         |
 | Spain   | Data Scientist | Female     | 25       | 5%         |
 | ...     | ...            | ...        | ...      | ...        |
-> **(1)** This attribute won't be the same for all students. See distribution bellow. 
+- Image (jpg), that adds to a pdf report: includes pie plot or any other output format that you may find convenient. You may also send your output by e-mail, upload it to a cloud repository, etc. 
+![Image](./data/reporting/gender_distribution_pie.jpeg)
+- 3 minutes presentation (ppt) to explain my project. 
+![Image](./data/reporting/project1_rm.png)
 
 
-**Your project must meet the following requirements:**
+### :wrench: **Configuration**
+See needed libraries in: requirements.txt.
+Database used can be found in: /data/raw/raw_data_project_m1.db.
+### :see_no_evil: **Usage**
+When running the script it will export all countries by default. 
 
-- It must be contained in a GitHub repository which includes a README file that explains the aim and content of your code. You may follow the structure suggested [here](https://github.com/potacho/data-project-template).
+In case filtering by one or more countries is needed, run the script using `-c or --country` parameters including a blank space between each country as shown below:
 
-- It must create, at least, a `.csv` file including the requested table. Alternatively, you may create an image, pdf, plot or any other output format that you may find convenient. You may also send your output by e-mail, upload it to a cloud repository, etc. 
+`python main_script -c Spain Austria`
 
-- It must provide, at least, two options for the final user to select when executing: **(1)** To get the table for every country included in the dataset, **(2)** To get the table for a specific country imputed by the user.
+The script will export a .csv per each stage of the project which you'll find in the /data folder.
 
-**Additionally:**
+### :file_folder: **Folder structure**
+The folders marked with * are still to be included 
+```
+└── project
+    ├── __trash__
+    ├── .gitignore
+    ├── .env*
+    ├── requeriments.txt
+    ├── README.md
+    ├── main_script.py
+    ├── your_path.py
+    ├── notebooks
+    │   ├── acquisitions.ipynb
+    │   └── analysis.ipynb
+    │   ├── other-code.ipynb
+    │   └── reporting.ipynb    
+    │   └── wrangling.ipynb
+    ├── p_acquisition
+    │   └── m_acquisition.py
+    ├── p_analysis
+    │   └── m_analysis.py
+    ├── p_reporting
+    │   └── m_reporting.py
+    ├── p_wrangling
+    │   └── m_wrangling.py
+    └── data
+        ├── raw
+           ├── raw_data_all.csv
+           ├── raw_data_info.csv
+           ├── raw_data_project_m1.db
+        ├── processed
+        └── results
+           ├── ch1_quantity.csv
+           ├── data_final.csv
 
-- You must prepare a 3 minutes presentation (ppt, canva, etc.) to explain your project (TAs will provide further details about the content of the presentation).
+``` 
 
-- The last slide of your presentation must include your candidate for the first **'Ironhack Data Code Beauty Pageant'**. 
-
+### :information_source: **Further info**
+Web Api links: 
+Country data: https://restcountries.eu/rest/v2/alpha/
+Job data: http://api.dataatwork.org/v1/jobs/
 
 ---
-
-### **Bonus 1:**
-
-| Position | Number of Pro Arguments | Number of Cons Arguments |
-|----------|-------------------------|--------------------------|
-| In Favor |                         |                          |
-| Against  |                         |                          |
-> Feel free to decide the criteria to use in order to define the concept of **Number**.
-
----
-### **Bonus 2:**
-
-| Education Level | Top 10 Skills | 
-|-----------------|---------------|
-| high            |               |                          
-| medium          |               |                          
-| low             |               |                          
-| no education    |               |                          
-> Feel free to decide the table's geometry (i.e.: the amount of columns used to show the skills).
-
-
----
-### **Bonus 3:**
-
-Any other information that you may find interesting and/or relevant!!! 
-
-
---- 
-
-## **Further Info**
-
-**Challenge 1 Attribute Distribution:**
-
-- **Gender:** Blanca, Carlos, David Gozalo, Enmanuel, Javi, Jorge, Josue, Laura, Luis, Miguel Angel, Pablo.
-
-- **Rural:** Adja, Agustin, Carmen, Diegales, Diego Melon, Juan Carlos, Juanito, Marta, Sabine, Sandra.
-
-- **Age (Dataset was taken in 2016):** Antonio, Christian, David Blanco, Ivan, Juan Antonio, Juan Muñoz, Lucas, Nacho, Sergio, Victor.
-
-**References:**
+Libraries
 
 - [SQL Alchemy](https://docs.sqlalchemy.org/en/13/intro.html)
 
